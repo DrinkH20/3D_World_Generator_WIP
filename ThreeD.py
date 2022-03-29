@@ -18,7 +18,7 @@ lines = []
 noise = perlin_noise.PerlinNoise()
 
 run = True
-angleX = 3.14
+angleX = 0
 angleY = 0
 angleZ = 0
 rotated = []
@@ -104,13 +104,13 @@ class Player:
         return collision(lst, (self.x, self.y+y_diff, self.z), 3, 1)
 
     def collide_side(self, angle_y):
-        self.z -= math.sin(angle_y) * self.side_vel
-        self.x += math.cos(angle_y) * self.side_vel
+        self.z -= math.sin(-angle_y) * self.side_vel
+        self.x += math.cos(-angle_y) * self.side_vel
         self.side_vel = 0
 
     def collide_forward(self, angle_y):
-        self.z += math.cos(angle_y) * self.forward_vel
-        self.x += math.sin(angle_y) * self.forward_vel
+        self.z += math.cos(-angle_y) * self.forward_vel
+        self.x += math.sin(-angle_y) * self.forward_vel
         self.forward_vel = 0
 
     def collide_y(self):
@@ -431,49 +431,50 @@ while run:
         if i != 0:
             preset = plyr[i].side_vel
             if plyr[i].collide(cube_place):
-                plyr[i].collide_forward(angleY)
+                plyr[i].collide_side(angleY)
                 chance = random.randint(1, 5)
                 if chance != 5:
                     plyr[i].set_up_vel(-1.3)
                 else:
                     living_forward_vels[i - 1] = -living_forward_vels[i - 1]
         else:
-            # preset = plyr[i].side_vel
-            # if plyr[i].collide(plot_cube_place):
-            #     plyr[i].set_side_vel(0)
-            #     plyr[i].move_side(.05, angleY)
-            #     plyr[i].set_side_vel(0)
-            #     if plyr[i].collide(plot_cube_place):
-            #         plyr[i].set_side_vel(0)
-            #         plyr[i].move_side(.05, angleY)
-            #         plyr[i].set_side_vel(0)
-            #         if plyr[i].collide(plot_cube_place):
-            #             plyr[i].set_side_vel(0)
-            #             plyr[i].move_side(.05, angleY)
-            #             plyr[i].set_side_vel(0)
-            #             if plyr[i].collide(plot_cube_place):
-            #                 plyr[i].set_side_vel(0)
-            #                 plyr[i].move_side(-.15, angleY)
-            #                 plyr[i].set_side_vel(0)
-            #                 if plyr[i].collide(plot_cube_place):
-            #                     plyr[i].set_side_vel(0)
-            #                     plyr[i].move_side(-.05, angleY)
-            #                     plyr[i].set_side_vel(0)
-            #                     if plyr[i].collide(plot_cube_place):
-            #                         plyr[i].set_side_vel(0)
-            #                         plyr[i].move_side(-.05, angleY)
-            #                         plyr[i].set_side_vel(0)
-            #                         if plyr[i].collide(plot_cube_place):
-            #                             plyr[i].set_side_vel(0)
-            #                             plyr[i].move_side(-.05, angleY)
-            #                             plyr[i].set_side_vel(0)
-            #                             if plyr[i].collide(plot_cube_place):
-            #                                 plyr[i].set_side_vel(0)
-            #                                 plyr[i].move_side(.15, angleY)
-            #                                 plyr[i].set_side_vel(preset)
-            #                                 plyr[i].collide_forward(angleY)
+            preset = plyr[i].forward_vel
             if plyr[i].collide(plot_cube_place):
-                plyr[i].collide_forward(angleY)
+                plyr[i].set_forward_vel(0)
+                plyr[i].move_forward(.05, angleY)
+                plyr[i].set_forward_vel(0)
+                if plyr[i].collide(plot_cube_place):
+                    plyr[i].set_forward_vel(0)
+                    plyr[i].move_forward(.05, angleY)
+                    plyr[i].set_forward_vel(0)
+                    if plyr[i].collide(plot_cube_place):
+                        plyr[i].set_forward_vel(0)
+                        plyr[i].move_forward(.05, angleY)
+                        plyr[i].set_forward_vel(0)
+                        if plyr[i].collide(plot_cube_place):
+                            plyr[i].set_forward_vel(0)
+                            plyr[i].move_forward(-.15, angleY)
+                            plyr[i].set_forward_vel(0)
+                            if plyr[i].collide(plot_cube_place):
+                                plyr[i].set_forward_vel(0)
+                                plyr[i].move_forward(-.05, angleY)
+                                plyr[i].set_forward_vel(0)
+                                if plyr[i].collide(plot_cube_place):
+                                    plyr[i].set_forward_vel(0)
+                                    plyr[i].move_forward(-.05, angleY)
+                                    plyr[i].set_forward_vel(0)
+                                    if plyr[i].collide(plot_cube_place):
+                                        plyr[i].set_forward_vel(0)
+                                        plyr[i].move_forward(-.05, angleY)
+                                        plyr[i].set_forward_vel(0)
+                                        if plyr[i].collide(plot_cube_place):
+                                            plyr[i].set_forward_vel(0)
+                                            plyr[i].move_forward(.15, angleY)
+                                            plyr[i].set_forward_vel(preset)
+                                            plyr[i].collide_side(angleY)
+
+            # if plyr[i].collide(plot_cube_place):
+            #     plyr[i].collide_side(angleY)
 
         if i == 0:
             if keys[pygame.K_w]:
@@ -499,49 +500,49 @@ while run:
 
         if i != 0:
             if plyr[i].collide(cube_place):
-                plyr[i].collide_side(angleY)
+                plyr[i].collide_forward(angleY)
                 chance = random.randint(1, 5)
                 if chance != 5:
                     plyr[i].set_up_vel(-1.3)
                 else:
                     living_side_vels[i - 1] = -living_side_vels[i - 1]
         else:
-            # preset = plyr[i].forward_vel
-            # if plyr[i].collide(plot_cube_place):
-            #     plyr[i].set_forward_vel(0)
-            #     plyr[i].move_forward(.05, angleY)
-            #     plyr[i].set_forward_vel(0)
-            #     if plyr[i].collide(plot_cube_place):
-            #         plyr[i].set_forward_vel(0)
-            #         plyr[i].move_forward(.05, angleY)
-            #         plyr[i].set_forward_vel(0)
-            #         if plyr[i].collide(plot_cube_place):
-            #             plyr[i].set_forward_vel(0)
-            #             plyr[i].move_forward(.05, angleY)
-            #             plyr[i].set_forward_vel(0)
-            #             if plyr[i].collide(plot_cube_place):
-            #                 plyr[i].set_forward_vel(0)
-            #                 plyr[i].move_forward(-.15, angleY)
-            #                 plyr[i].set_forward_vel(0)
-            #                 if plyr[i].collide(plot_cube_place):
-            #                     plyr[i].set_forward_vel(0)
-            #                     plyr[i].move_forward(-.05, angleY)
-            #                     plyr[i].set_forward_vel(0)
-            #                     if plyr[i].collide(plot_cube_place):
-            #                         plyr[i].set_forward_vel(0)
-            #                         plyr[i].move_forward(-.05, angleY)
-            #                         plyr[i].set_forward_vel(0)
-            #                         if plyr[i].collide(plot_cube_place):
-            #                             plyr[i].set_forward_vel(0)
-            #                             plyr[i].move_forward(-.05, angleY)
-            #                             plyr[i].set_forward_vel(0)
-            #                             if plyr[i].collide(plot_cube_place):
-            #                                 plyr[i].set_forward_vel(0)
-            #                                 plyr[i].move_forward(.15, angleY)
-            #                                 plyr[i].set_forward_vel(preset)
-            #                                 plyr[i].collide_side(angleY)
+            preset = plyr[i].side_vel
             if plyr[i].collide(plot_cube_place):
-                plyr[i].collide_side(angleY)
+                plyr[i].set_side_vel(0)
+                plyr[i].move_side(.05, angleY)
+                plyr[i].set_side_vel(0)
+                if plyr[i].collide(plot_cube_place):
+                    plyr[i].set_side_vel(0)
+                    plyr[i].move_side(.05, angleY)
+                    plyr[i].set_side_vel(0)
+                    if plyr[i].collide(plot_cube_place):
+                        plyr[i].set_side_vel(0)
+                        plyr[i].move_side(.05, angleY)
+                        plyr[i].set_side_vel(0)
+                        if plyr[i].collide(plot_cube_place):
+                            plyr[i].set_side_vel(0)
+                            plyr[i].move_side(-.15, angleY)
+                            plyr[i].set_side_vel(0)
+                            if plyr[i].collide(plot_cube_place):
+                                plyr[i].set_side_vel(0)
+                                plyr[i].move_side(-.05, angleY)
+                                plyr[i].set_side_vel(0)
+                                if plyr[i].collide(plot_cube_place):
+                                    plyr[i].set_side_vel(0)
+                                    plyr[i].move_side(-.05, angleY)
+                                    plyr[i].set_side_vel(0)
+                                    if plyr[i].collide(plot_cube_place):
+                                        plyr[i].set_side_vel(0)
+                                        plyr[i].move_side(-.05, angleY)
+                                        plyr[i].set_side_vel(0)
+                                        if plyr[i].collide(plot_cube_place):
+                                            plyr[i].set_side_vel(0)
+                                            plyr[i].move_side(.15, angleY)
+                                            plyr[i].set_side_vel(preset)
+                                            plyr[i].collide_forward(angleY)
+            # if plyr[i].collide(plot_cube_place):
+            #     plyr[i].collide_forward(angleY)
 
         plyr[i].move_up(.1)
         if plyr[i].collide(cube_place):
@@ -585,6 +586,11 @@ while run:
         # angleX -= math.cos(angleY) * .05
         povY += .1
 
+    if keys[pygame.K_i]:
+        # angleZ += math.sin(angleY) * .05
+        # angleX -= math.cos(angleY) * .05
+        angleX += .1
+
     if povY > -.05:
         povY = -.05
     if povY < -1.5:
@@ -592,7 +598,6 @@ while run:
 
     # print(math.sin(povY*2))
     # angleX = math.sin(povY*2)
-    angleX = 0
     angleY = math.atan2(povZ, povX) + 1.7
 
     if not first:
