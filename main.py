@@ -5,11 +5,11 @@ import random
 noise = perlin_noise.PerlinNoise()
 # fav is .009
 
-noise_scale = .008
+noise_scale = .01
 
 running = True
 
-screen_w, screen_h = 20, 20
+screen_w, screen_h = 50, 50
 
 # Place has x, y, and z
 place = []

@@ -270,7 +270,7 @@ def collision(lst, obj, spec=0, dif=0):
 cube_place = fill()
 plot_cube_place = close(cube_place, origin[0:3])
 
-plyr = [Player()]
+plyr = [Player(), Player()]
 
 while run:
     keys = pygame.key.get_pressed()
@@ -617,7 +617,6 @@ while run:
 
     if keys[pygame.K_1]:
         first = 1
-    print(povY)
     if first:
         povY = -.25
 
@@ -643,4 +642,5 @@ while run:
         if event.type == pygame.QUIT:
             run = False
             break
+
 pygame.quit()
